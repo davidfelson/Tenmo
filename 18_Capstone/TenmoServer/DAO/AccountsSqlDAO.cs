@@ -7,7 +7,7 @@ using TenmoClient.Data;
 
 namespace TenmoServer.DAO
 {
-    public class AccountsSqlDAO
+    public class AccountsSqlDAO : IAccountsDAO
     {
         //Accounts account = new Accounts();
 
