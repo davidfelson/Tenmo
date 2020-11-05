@@ -8,6 +8,7 @@ namespace TenmoClient.Views
 {
     public class MainMenu : ConsoleMenu
     {
+        //private TransferService transferService;
 
         public MainMenu()
         { 
@@ -47,7 +48,14 @@ namespace TenmoClient.Views
         private MenuOptionResult SendTEBucks()
         {
             //List all users
-            foreach (API_User user in ) 
+            foreach (API_User user in TransferService.GetListUsers())
+            {
+                Console.WriteLine($"Username: {user.Username}, UserId: {user.UserId}");
+            }
+            Console.WriteLine("Please enter the UserId of the person you would like to send funds to and press \"Enter\". ");
+
+            //string userSelection = Console.ReadLine();
+            int userSelection = Convert.ToInt32(Console.ReadLine());
 
 
             return MenuOptionResult.WaitAfterMenuSelection;

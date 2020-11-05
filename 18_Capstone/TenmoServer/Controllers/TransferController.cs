@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenmoServer.DAO;
+using TenmoServer.Models;
 
 namespace TenmoServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TransferController : ControllerBase
     {
@@ -19,6 +20,12 @@ namespace TenmoServer.Controllers
             this.userDAO = userDAO;
         }
 
-
+        [HttpGet]
+        public List<User> GetListUsers()
+        {
+            return userDAO.GetUsers();
+            //UserSqlDAO userSqlDAO = new UserSqlDAO();
+            //return userSqlDAO.GetUsers();
+        }
     }
 }
