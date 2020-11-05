@@ -26,8 +26,9 @@ namespace TenmoClient.Views
         }
 
         private MenuOptionResult ViewBalance()
-        {
-            Console.WriteLine($"Your balance is: FINISH THIS");
+        { 
+            int userId = UserService.GetUserId();
+            Console.WriteLine($"Your balance is: {AccountService.AccountBalance(userId).Balance:c}");
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

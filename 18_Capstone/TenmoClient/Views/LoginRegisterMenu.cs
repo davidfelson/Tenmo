@@ -10,9 +10,11 @@ namespace TenmoClient.Views
     public class LoginRegisterMenu : ConsoleMenu
     {
         private readonly AuthService authService;
+        
 
         public LoginRegisterMenu(AuthService authService)
         {
+            
             this.authService = authService;
 
             AddOption("Login", Login)

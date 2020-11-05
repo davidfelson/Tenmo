@@ -10,6 +10,7 @@ namespace TenmoClient
 
         static void Main(string[] args)
         {
+            
             AuthService authService = new AuthService();
             new LoginRegisterMenu(authService).Show();
 

@@ -23,8 +23,9 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Accounts> GetAccountBalance(int id)
+        public ActionResult<Accounts> GetAccountBalance(int id)         //change to get MY account balance 
         {
+            Console.WriteLine("Hello world");
             Accounts account = accntDAO.GetAccountBalance(id);
             if (account == null)
             {
@@ -32,8 +33,7 @@ namespace TenmoServer.Controllers
             }
             else
             {
-                return account;
-                    
+                return account;          
             }
 
         }
