@@ -46,8 +46,12 @@ namespace TenmoClient.Views
 
         private MenuOptionResult SendTEBucks()
         {
-            Console.WriteLine("Not yet implemented!");
+            //List all users
+            foreach (API_User user in ) 
+
+
             return MenuOptionResult.WaitAfterMenuSelection;
+
         }
 
         private MenuOptionResult RequestTEBucks()
