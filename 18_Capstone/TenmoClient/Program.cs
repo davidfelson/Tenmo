@@ -10,9 +10,9 @@ namespace TenmoClient
 
         static void Main(string[] args)
         {
-            
+            TransferService transferService = new TransferService();
             AuthService authService = new AuthService();
-            new LoginRegisterMenu(authService).Show();
+            new LoginRegisterMenu(authService, transferService).Show();
 
             Console.WriteLine("\r\nThank you for using TEnmo!!!\r\n");
         }

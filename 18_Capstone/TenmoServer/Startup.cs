@@ -55,8 +55,9 @@ namespace TenmoServer
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
             services.AddTransient<IUserDAO>(m => new UserSqlDAO(connectionString));
             services.AddTransient<IAccountsDAO>(m => new AccountsSqlDAO(connectionString));     //When the program starts up and you need to craete an IAccountDAO, do this(create new accountSqlDao)
+            services.AddTransient<ITransferDAO>(m => new TransferSqlDAO(connectionString));
         }                                                                       //connecting to the database
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

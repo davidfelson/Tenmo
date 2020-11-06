@@ -8,9 +8,9 @@ namespace TenmoClient.Views
 {
     public class MainMenu : ConsoleMenu
     {
-        //private TransferService transferService;
+        private TransferService transferService;
 
-        public MainMenu()
+        public MainMenu(TransferService transferService)
         { 
             AddOption("View your current balance", ViewBalance)
                 .AddOption("View your past transfers", ViewTransfers)
@@ -53,10 +53,12 @@ namespace TenmoClient.Views
                 Console.WriteLine($"Username: {user.Username}, UserId: {user.UserId}");
             }
             Console.WriteLine("Please enter the UserId of the person you would like to send funds to and press \"Enter\". ");
+            int userIDSelection = Convert.ToInt32(Console.ReadLine());
 
-            //string userSelection = Console.ReadLine();
-            int userSelection = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter amount to transfer: ");
+            decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
 
+            transferService.SendMoney(userIDSelection, UserService.GetUserId(), userAmountSelection);
 
             return MenuOptionResult.WaitAfterMenuSelection;
 

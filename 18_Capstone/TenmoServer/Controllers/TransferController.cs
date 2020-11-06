@@ -14,10 +14,12 @@ namespace TenmoServer.Controllers
     public class TransferController : ControllerBase
     {
         private IUserDAO userDAO;
+        private ITransferDAO transferDAO;
 
-        public TransferController(IUserDAO userDAO)
+        public TransferController(IUserDAO userDAO, ITransferDAO transferDAO)
         {
             this.userDAO = userDAO;
+            this.transferDAO = transferDAO;
         }
 
         [HttpGet]
@@ -26,6 +28,12 @@ namespace TenmoServer.Controllers
             return userDAO.GetUsers();
             //UserSqlDAO userSqlDAO = new UserSqlDAO();
             //return userSqlDAO.GetUsers();
+        }
+
+        [HttpPost]
+        public bool SendMoney(int receiverId, int senderId, decimal sendAmount)
+        {
+            return transferDAO.SendMoney(receiverId, senderId, sendAmount);
         }
     }
 }

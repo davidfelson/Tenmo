@@ -12,15 +12,11 @@ namespace TenmoClient.Data
 
         public int transfer_status_id { get; set; }
 
-        public int MyProperty { get; set; }
-
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public int? account_from { get; set; }
 
         public int? account_to { get; set; }
-
-        //Add account_from/account_to?
 
 
     }
