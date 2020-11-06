@@ -8,7 +8,7 @@ namespace TenmoClient.Views
 {
     public class MainMenu : ConsoleMenu
     {
-        private TransferService transferService;
+        private TransferService transferService = new TransferService();
 
         public MainMenu(TransferService transferService)
         { 

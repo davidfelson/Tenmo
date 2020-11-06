@@ -17,7 +17,5 @@ namespace TenmoClient.Data
         public int account_from { get; set; }
 
         public int account_to { get; set; }
-
-
     }
 }
