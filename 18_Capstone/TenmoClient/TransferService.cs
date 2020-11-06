@@ -29,7 +29,7 @@ namespace TenmoClient
             RestRequest request = new RestRequest(API_BASE_URL + "transfer");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             //MIGHT NEED TO ADD JSON BODY
-            IRestResponse response = client.Put(request);
+            IRestResponse response = client.Post(request);
 
             CheckResponse(response);
 
