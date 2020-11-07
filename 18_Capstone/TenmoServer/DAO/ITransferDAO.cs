@@ -12,5 +12,7 @@ namespace TenmoServer.DAO
         bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount);
 
         List<ViewTransfers> ViewTransfers(int id);
+
+        Transfers GetTransfer(int id);
     }
 }

@@ -29,16 +29,24 @@ namespace TenmoClient.Views
         private MenuOptionResult ViewBalance()
         { 
             int userId = UserService.GetUserId();
+            
             Console.WriteLine($"Your balance is: {AccountService.AccountBalance(userId).Balance:c}");
+            
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
         private MenuOptionResult ViewTransfers()
         {
-            foreach (ViewTransfers transfers in transferService.ViewTransfers(UserService.GetUserId()))
+            int userId = UserService.GetUserId();
+            foreach (ViewTransfers transfers in transferService.ViewTransfers(userId))
             {
                 Console.WriteLine($"{transfers.transfer_id} \t {transfers.transfer_type_id}: {transfers.Username} \t {transfers.Amount:c}");
             }
+            Console.WriteLine("Please enter transfer ID to view details  \"Enter\". ");
+            int transferIDSelection = Convert.ToInt32(Console.ReadLine());
+            Transfers trans = transferService.GetTransfer(transferIDSelection);
+            Console.WriteLine($"Id:{trans.transfer_id}\nFrom: {trans.account_from}\nTo: {trans.account_to}\nType: {trans.transfer_type_id}\nStatus: {trans.transfer_status_id}\nAmount: {trans.Amount}");
+
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

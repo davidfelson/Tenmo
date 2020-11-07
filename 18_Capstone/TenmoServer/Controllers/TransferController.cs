@@ -34,10 +34,15 @@ namespace TenmoServer.Controllers
             return userDAO.GetUsers();
         }
 
-        [HttpGet("viewtransfers")]
+        [HttpGet("{id}")]
         public List<ViewTransfers> ViewTransfers(int id)
         {
             return transferDAO.ViewTransfers(id);
+        }
+        [HttpGet("transfer{id}")]
+        public Transfers GetTransfer(int id)
+        {
+            return transferDAO.GetTransfer(id);
         }
 
         [HttpPost("send")]

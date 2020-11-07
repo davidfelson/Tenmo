@@ -53,8 +53,8 @@ namespace TenmoServer.DAO
 
 
 
-            public bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount)
-            {
+        public bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount)
+        {
             string sql = "insert transfers (transfer_type_id, transfer_status_id, account_from, account_to,amount) values(@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)";
 
             try
@@ -114,12 +114,56 @@ namespace TenmoServer.DAO
                         }
                     }
                 }
-                return listTransfers;
+
             }
             catch (SqlException ex)
             {
                 throw ex;
-            }       
+            }
+            return listTransfers;
+        }
+
+
+        public Transfers GetTransfer(int transfer_id)
+        {
+            Transfers transfer = new Transfers();
+            try
+            {
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("select *from transfers where transfer_id = @id ", conn);
+
+                    cmd.Parameters.AddWithValue("@id", transfer_id);
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+
+                            transfer.transfer_id = Convert.ToInt32(rdr["transfer_id"]);
+                            transfer.transfer_type_id = (TransferType)Convert.ToInt32(rdr["transfer_type_id"]);
+                            transfer.transfer_status_id = (TransferStatus)Convert.ToInt32(rdr["transfer_status_id"]);
+                            transfer.Amount = Convert.ToDecimal(rdr["amount"]);
+                            transfer.account_from = Convert.ToInt32(rdr["account_from"]);
+                            transfer.account_to = Convert.ToInt32(rdr["account_to"]);
+
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return transfer;
+
         }
     }
+
 }
+
+
