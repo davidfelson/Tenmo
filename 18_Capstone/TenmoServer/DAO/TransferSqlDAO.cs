@@ -47,32 +47,13 @@ namespace TenmoServer.DAO
             }
         }
 
-        //public bool SendMoney(int receiverId, int senderId, decimal sendAmount)         //consider implementing this whole arugument as a single object
-        //{
-        //    Accounts senderObject = accountsDAO.GetAccountBalance(senderId);
-        //    Accounts receiverObject = accountsDAO.GetAccountBalance(receiverId);
-
-        //    if (senderObject.Balance > sendAmount)
-        //    {
-        //        receiverObject.Balance += sendAmount;
-        //        senderObject.Balance -= sendAmount;
-
-        //        UpdateBalance(senderId, senderObject.Balance);
-        //        UpdateBalance(receiverId, receiverObject.Balance);
 
 
-        //        LogTransfers(2, 2, senderObject.AccountId, receiverObject.AccountId, sendAmount);
-        //        LogTransfers(1, 2, receiverObject.AccountId, senderObject.AccountId, sendAmount);
+        //NEED TO CAST TO TransferType/Status when we read the transfers in
 
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;     //CHANGE LATER IF NEEDED
-        //    }
-        //}
 
-        public bool LogTransfers(int transfer_type_id, int transfer_status_id, int accountID_from, int accountID_to, decimal amount)
+
+            public bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount)
         {
             string sql = "insert transfers (transfer_type_id, transfer_status_id, account_from, account_to,amount) values(@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)";
 

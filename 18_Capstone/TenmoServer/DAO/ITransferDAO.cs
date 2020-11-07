@@ -1,4 +1,6 @@
-﻿namespace TenmoServer.DAO
+﻿using TenmoClient.Data;
+
+namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
@@ -6,6 +8,6 @@
 
         //bool SendMoney(int receiverId, int senderId, decimal sendAmount);
 
-        bool LogTransfers(int transfer_type_id, int transfer_status_id, int accountID_from, int accountID_to, decimal amount);
+        bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount);
     }
 }

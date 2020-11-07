@@ -8,9 +8,9 @@ namespace TenmoClient.Data
     {
         public int transfer_id { get; set; }
 
-        public int transfer_type_id { get; set; }
+        public TransferType transfer_type_id { get; set; }
 
-        public int transfer_status_id { get; set; }
+        public TransferStatus transfer_status_id { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -19,5 +19,18 @@ namespace TenmoClient.Data
         public int account_to { get; set; }
 
 
+    }
+
+    public enum TransferStatus : int
+    {
+        Pending = 1, 
+        Approved,
+        Rejected
+    }
+
+    public enum TransferType : int
+    {
+        Request = 1,
+        Send
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TenmoClient.Data;
 using TenmoServer.DAO;
 using TenmoServer.Models;
+using TenmoServer.Services;
 
 namespace TenmoServer.Controllers
 {
@@ -15,13 +16,13 @@ namespace TenmoServer.Controllers
     public class TransferController : ControllerBase
     {
         private IUserDAO userDAO;
-        private ITransferDAO transferDAO;
+        private TransferServices transferServices;
         private IAccountsDAO accountsDAO;
 
-        public TransferController(IUserDAO userDAO, ITransferDAO transferDAO, IAccountsDAO accountsDAO)
+        public TransferController(IUserDAO userDAO, TransferServices transferServices, IAccountsDAO accountsDAO)
         {
             this.userDAO = userDAO;
-            this.transferDAO = transferDAO;
+            this.transferServices = transferServices;     //Don't need a DAO with transferServices in server
             this.accountsDAO = accountsDAO;
         }
 
@@ -29,35 +30,18 @@ namespace TenmoServer.Controllers
         public List<User> GetListUsers()
         {
             return userDAO.GetUsers();
-            //UserSqlDAO userSqlDAO = new UserSqlDAO();
-            //return userSqlDAO.GetUsers();
         }
 
         [HttpPost]
-        public bool SendMoney(Transfers transfers)     //int receiverId, int senderId, decimal sendAmount
+        public string SendMoney(Transfers transfers)     
         {
-            //return transferDAO.SendMoney(receiverId, senderId, sendAmount);
-            Accounts senderObject = accountsDAO.GetAccountBalance(transfers.account_from);
-            Accounts receiverObject = accountsDAO.GetAccountBalance(transfers.account_to);
+            return transferServices.SendMoney(transfers);     
+        }
 
-            if (senderObject.Balance > transfers.Amount)
-            {
-                receiverObject.Balance += transfers.Amount;
-                senderObject.Balance -= transfers.Amount;
-
-                transferDAO.UpdateBalance(transfers.account_from, senderObject.Balance);
-                transferDAO.UpdateBalance(transfers.account_to, receiverObject.Balance);
-
-
-                transferDAO.LogTransfers(2, 2, senderObject.AccountId, receiverObject.AccountId, transfers.Amount);
-                transferDAO.LogTransfers(1, 2, receiverObject.AccountId, senderObject.AccountId, transfers.Amount);
-
-                return true;
-            }
-            else
-            {
-                return false;     //CHANGE LATER IF NEEDED
-            }
+        [HttpPost]
+        public string RequestMoney(Transfers transfers)
+        {
+            return transferServices.RequestMoney(transfers);
         }
     }
 }

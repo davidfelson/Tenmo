@@ -66,7 +66,18 @@ namespace TenmoClient.Views
 
         private MenuOptionResult RequestTEBucks()
         {
-            Console.WriteLine("Not yet implemented!");
+            foreach (API_User user in TransferService.GetListUsers())
+            {
+                Console.WriteLine($"Username: {user.Username}, UserId: {user.UserId}");
+            }
+            Console.WriteLine("Please enter the UserId of the person you would like to request fund from and press \"Enter\". ");
+            int userIDSelection = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter amount to transfer: ");
+            decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
+
+            transferService.RequestMoney(userIDSelection, UserService.GetUserId(), userAmountSelection);
+
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

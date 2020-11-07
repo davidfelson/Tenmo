@@ -42,6 +42,23 @@ namespace TenmoClient
             return true;
         }
 
+        public bool RequestMoney(int receiverId, int senderId, decimal sendAmount)
+        {
+            Transfers transfers = new Transfers()
+            {
+                account_from = senderId,
+                account_to = receiverId,
+                Amount = sendAmount
+            };
+            RestRequest request = new RestRequest(API_BASE_URL + "transfer");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            request.AddJsonBody(transfers);
+            IRestResponse response = client.Post(request);
+
+            CheckResponse(response);
+
+            return true;
+        }
 
 
 
