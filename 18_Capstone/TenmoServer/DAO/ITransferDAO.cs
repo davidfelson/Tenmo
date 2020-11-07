@@ -1,4 +1,5 @@
-﻿using TenmoClient.Data;
+﻿using System.Collections.Generic;
+using TenmoClient.Data;
 
 namespace TenmoServer.DAO
 {
@@ -9,5 +10,7 @@ namespace TenmoServer.DAO
         //bool SendMoney(int receiverId, int senderId, decimal sendAmount);
 
         bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount);
+
+        List<ViewTransfers> ViewTransfers(int id);
     }
 }

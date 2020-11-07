@@ -35,7 +35,10 @@ namespace TenmoClient.Views
 
         private MenuOptionResult ViewTransfers()
         {
-            Console.WriteLine("Not yet implemented!");
+            foreach (ViewTransfers transfers in transferService.ViewTransfers(UserService.GetUserId()))
+            {
+                Console.WriteLine($"{transfers.transfer_id} \t {transfers.transfer_type_id}: {transfers.Username} \t {transfers.Amount:c}");
+            }
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
@@ -76,7 +79,7 @@ namespace TenmoClient.Views
             Console.WriteLine("Enter amount to transfer: ");
             decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
 
-            transferService.RequestMoney(userIDSelection, UserService.GetUserId(), userAmountSelection);
+            transferService.RequestMoney(UserService.GetUserId(), userIDSelection, userAmountSelection);
 
             return MenuOptionResult.WaitAfterMenuSelection;
         }

@@ -17,8 +17,17 @@ namespace TenmoClient.Data
         public int account_from { get; set; }
 
         public int account_to { get; set; }
+    }
 
+    public class ViewTransfers
+    {
+        public int transfer_id { get; set; }
 
+        public TransferType transfer_type_id { get; set; }
+
+        public string Username { get; set; }
+
+        public decimal Amount { get; set; }
     }
 
     public enum TransferStatus : int

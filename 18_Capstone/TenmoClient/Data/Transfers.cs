@@ -18,4 +18,34 @@ namespace TenmoClient.Data
 
         public int account_to { get; set; }
     }
+
+    public class ViewTransfers
+    {
+        public int transfer_id { get; set; }
+
+        public FromTo transfer_type_id { get; set; }
+
+        public string Username { get; set; }
+
+        public decimal Amount { get; set; }
+    }
+
+    public enum TransferStatus : int
+    {
+        Pending = 1,
+        Approved,
+        Rejected
+    }
+
+    public enum TransferType : int
+    {
+        Request = 1,
+        Send
+    }
+
+    public enum FromTo : int
+    {
+        From = 1,
+        To
+    }
 }

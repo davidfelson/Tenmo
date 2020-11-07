@@ -32,7 +32,7 @@ namespace TenmoClient
                 account_to = receiverId,
                 Amount = sendAmount
             };
-            RestRequest request = new RestRequest(API_BASE_URL + "transfer");
+            RestRequest request = new RestRequest(API_BASE_URL + "transfer" + "/send");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             request.AddJsonBody(transfers);
             IRestResponse response = client.Post(request);
@@ -50,7 +50,7 @@ namespace TenmoClient
                 account_to = receiverId,
                 Amount = sendAmount
             };
-            RestRequest request = new RestRequest(API_BASE_URL + "transfer");
+            RestRequest request = new RestRequest(API_BASE_URL + "transfer" + "/request");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             request.AddJsonBody(transfers);
             IRestResponse response = client.Post(request);
@@ -58,6 +58,18 @@ namespace TenmoClient
             CheckResponse(response);
 
             return true;
+        }
+
+        public List<ViewTransfers> ViewTransfers(int id)
+        {
+            RestRequest request = new RestRequest(API_BASE_URL + "transfer" + "/viewtransfers");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<List<ViewTransfers>> response = client.Get<List<ViewTransfers>>(request);
+
+            CheckResponse(response);
+
+            return response.Data;
+
         }
 
 

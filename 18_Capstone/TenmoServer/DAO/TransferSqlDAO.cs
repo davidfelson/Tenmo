@@ -54,7 +54,7 @@ namespace TenmoServer.DAO
 
 
             public bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount)
-        {
+            {
             string sql = "insert transfers (transfer_type_id, transfer_status_id, account_from, account_to,amount) values(@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)";
 
             try
@@ -84,6 +84,42 @@ namespace TenmoServer.DAO
         }
 
         //Separate method for actual transfer record to record in Database
+        public List<ViewTransfers> ViewTransfers(int user_id)
+        {
+            List<ViewTransfers> listTransfers = new List<ViewTransfers>();
+            string sql = "select t.transfer_id, t.transfer_type_id, u.username, t.amount from users u Join accounts a ON u.user_id = a.user_id Join transfers t ON t.account_from = a.account_id where t.account_from = @user_id OR t.account_to = @user_id";
 
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@user_id", user_id);
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            ViewTransfers viewTransfers = new ViewTransfers();
+                            viewTransfers.transfer_id = Convert.ToInt32(rdr["transfer_id"]);
+                            viewTransfers.transfer_type_id = (TransferType)Convert.ToInt32(rdr["transfer_type_id"]);
+                            viewTransfers.Username = Convert.ToString(rdr["username"]);
+                            viewTransfers.Amount = Convert.ToDecimal(rdr["amount"]);
+
+                            listTransfers.Add(viewTransfers);
+                        }
+                    }
+                }
+                return listTransfers;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }       
+        }
     }
 }
