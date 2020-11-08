@@ -12,5 +12,8 @@ namespace TenmoServer.DAO
         List<Transfers> ViewTransfers(int id);
 
         Transfers GetTransfer(int id);
+        List<Transfers> ViewPendingTransfers(int user_id);
+        bool UpdateStatus(int transferId, int statusId);
+
     }
 }
