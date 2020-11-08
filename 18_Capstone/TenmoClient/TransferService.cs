@@ -24,6 +24,16 @@ namespace TenmoClient
             return response.Data;       
         }
 
+        public static API_User GetUserById(int id)
+        {
+            RestRequest request = new RestRequest(API_BASE_URL + $"transfer/" + "user" + id);
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<API_User> response = client.Get<API_User>(request);
+            //add exception handling
+
+            return response.Data;
+        }
+
         public bool SendMoney(int receiverId, int senderId, decimal sendAmount)
         {
             Transfers transfers = new Transfers()

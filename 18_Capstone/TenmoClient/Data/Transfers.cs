@@ -8,9 +8,9 @@ namespace TenmoClient.Data
     {
         public int transfer_id { get; set; }
 
-        public int transfer_type_id { get; set; }
+        public TransferType transfer_type_id { get; set; }
 
-        public int transfer_status_id { get; set; }
+        public TransferStatus transfer_status_id { get; set; }
 
         public decimal Amount { get; set; }
 

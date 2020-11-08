@@ -87,7 +87,7 @@ namespace TenmoServer.DAO
         public List<ViewTransfers> ViewTransfers(int user_id)
         {
             List<ViewTransfers> listTransfers = new List<ViewTransfers>();
-            string sql = "select t.transfer_id, t.transfer_type_id, u.username, t.amount from users u Join accounts a ON u.user_id = a.user_id Join transfers t ON t.account_from = a.account_id where t.account_from = @user_id OR t.account_to = @user_id";
+            string sql = "select t.transfer_id, t.transfer_type_id, u.username, t.amount from users u Join accounts a ON u.user_id = a.user_id Join transfers t ON t.account_from = a.account_id where t.account_from != @user_id OR t.account_to != @user_id";
 
             try
             {

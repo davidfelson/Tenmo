@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenmoClient.Data;
@@ -13,6 +14,7 @@ namespace TenmoServer.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class TransferController : ControllerBase
     {
         private IUserDAO userDAO;
@@ -32,6 +34,12 @@ namespace TenmoServer.Controllers
         public List<User> GetListUsers()
         {
             return userDAO.GetUsers();
+        }
+
+        [HttpGet("user{id}")]
+        public User GetUserById(int id)
+        {
+            return userDAO.GetUserById(id);
         }
 
         [HttpGet("{id}")]
