@@ -7,8 +7,6 @@ namespace TenmoServer.DAO
     {
         bool UpdateBalance(int userId, decimal updatedBalance);
 
-        //bool SendMoney(int receiverId, int senderId, decimal sendAmount);
-
         bool LogTransfers(TransferType transfer_type_id, TransferStatus transfer_status_id, int accountID_from, int accountID_to, decimal amount);
 
         List<Transfers> ViewTransfers(int id);
