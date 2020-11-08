@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using TenmoClient.Data;
 using TenmoServer.DAO;
@@ -67,7 +68,7 @@ namespace TenmoServer.Services
                 transferDAO.UpdateBalance(transfers.account_from, senderObject.Balance);
                 transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
 
-                transferDAO.LogTransfers(TransferType.Request, TransferStatus.Approved, requesterObject.AccountId, senderObject.AccountId, transfers.Amount);   //Approve/reject prior to handling balance updates
+                transferDAO.LogTransfers(TransferType.Request, TransferStatus.Pending, requesterObject.AccountId, senderObject.AccountId, transfers.Amount);   //Approve/reject prior to handling balance updates
 
                 return "Your request was successfully made.";
             }
@@ -83,6 +84,9 @@ namespace TenmoServer.Services
             {
                 return "Unsuccessful request.";
             }
+            
+           
+        
         }
     }
 }

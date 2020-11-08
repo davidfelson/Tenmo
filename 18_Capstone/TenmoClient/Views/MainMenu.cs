@@ -12,7 +12,7 @@ namespace TenmoClient.Views
         private UserNameResponse userNameResponse = new UserNameResponse();
 
         public MainMenu(TransferService transferService, UserNameResponse userNameResponse)
-        { 
+        {
             AddOption("View your current balance", ViewBalance)
                 .AddOption("View your past transfers", ViewTransfers)
                 .AddOption("View your pending requests", ViewRequests)
@@ -28,11 +28,11 @@ namespace TenmoClient.Views
         }
 
         private MenuOptionResult ViewBalance()
-        { 
+        {
             int userId = UserService.GetUserId();
-            
+
             Console.WriteLine($"Your balance is: {AccountService.AccountBalance(userId).Balance:c}");
-            
+
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
@@ -43,9 +43,9 @@ namespace TenmoClient.Views
             {
                 Console.WriteLine(userNameResponse.UserNameResponses(userId, transfers));
             }
-            Console.WriteLine("Please enter transfer ID to view details (0 to cancel):");           
+            Console.WriteLine("Please enter transfer ID to view details (0 to cancel):");
             int transferIDSelection = Convert.ToInt32(Console.ReadLine());
-            if(transferIDSelection == 0)
+            if (transferIDSelection == 0)
             {
                 return MenuOptionResult.CloseMenuAfterSelection;
             }
@@ -57,7 +57,10 @@ namespace TenmoClient.Views
 
         private MenuOptionResult ViewRequests()
         {
-            Console.WriteLine("Not yet implemented!");
+            //if (transferIDSelection == 0)
+            //{
+            //    return MenuOptionResult.CloseMenuAfterSelection;
+            //}
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
@@ -68,9 +71,12 @@ namespace TenmoClient.Views
             {
                 Console.WriteLine($"Username: {user.Username}, UserId: {user.UserId}");
             }
-            Console.WriteLine("Please enter the UserId of the person you would like to send funds to and press \"Enter\". ");
+            Console.WriteLine("Enter ID of user you are sending to (0 to cancel):");
             int userIDSelection = Convert.ToInt32(Console.ReadLine());
-
+            if (userIDSelection == 0)
+            {
+                return MenuOptionResult.CloseMenuAfterSelection;
+            }
             Console.WriteLine("Enter amount to transfer: ");
             decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
 
@@ -86,8 +92,12 @@ namespace TenmoClient.Views
             {
                 Console.WriteLine($"Username: {user.Username}, UserId: {user.UserId}");
             }
-            Console.WriteLine("Please enter the UserId of the person you would like to request fund from and press \"Enter\". ");
+            Console.WriteLine("Enter ID of user you are requesting from (0 to cancel):");
             int userIDSelection = Convert.ToInt32(Console.ReadLine());
+            if (userIDSelection == 0)
+            {
+                return MenuOptionResult.CloseMenuAfterSelection;
+            }
 
             Console.WriteLine("Enter amount to transfer: ");
             decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
