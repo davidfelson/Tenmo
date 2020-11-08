@@ -43,8 +43,12 @@ namespace TenmoClient.Views
             {
                 Console.WriteLine(userNameResponse.UserNameResponses(userId, transfers));
             }
-            Console.WriteLine("Please enter transfer ID to view details  \"Enter\". ");
+            Console.WriteLine("Please enter transfer ID to view details (0 to cancel):");           
             int transferIDSelection = Convert.ToInt32(Console.ReadLine());
+            if(transferIDSelection == 0)
+            {
+                return MenuOptionResult.CloseMenuAfterSelection;
+            }
             Transfers trans = transferService.GetTransfer(transferIDSelection);
             Console.WriteLine($"Id:{trans.transfer_id}\nFrom: {TransferService.GetUserById(trans.account_from).Username}\nTo: {TransferService.GetUserById(trans.account_to).Username}\nType: {trans.transfer_type_id}\nStatus: {trans.transfer_status_id}\nAmount: {trans.Amount:c}");
 

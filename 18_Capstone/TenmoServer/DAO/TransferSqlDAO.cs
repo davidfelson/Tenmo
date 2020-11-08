@@ -46,6 +46,30 @@ namespace TenmoServer.DAO
                 return false;
             }
         }
+        public bool UpdateStatus(int transferId,int statusId)
+        {
+            string sql = "update transfers set transfer_status_id = @statusId where transfer_id = @transfer_id";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@statusId", statusId);
+                    cmd.Parameters.AddWithValue("@transferId", transferId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+        }
 
 
 
@@ -82,7 +106,46 @@ namespace TenmoServer.DAO
             }
 
         }
+        public List<Transfers> ViewPendingTransfers(int user_id)
+        {
+            List<Transfers> listTransfers = new List<Transfers>();
+            string sql = "select t.transfer_id, t.transfer_type_id,t.transfer_status_id,t.amount,t.account_from,t.account_to from transfers t join accounts a on a.account_id = t.account_from join users u on u.user_id = a.user_id where t.account_to = @user_id OR t.account_from = @user_id AND t.transfer_status_id = 1";
 
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@user_id", user_id);
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            Transfers transfer = new Transfers();
+                            transfer.transfer_id = Convert.ToInt32(rdr["transfer_id"]);
+                            transfer.transfer_type_id = (TransferType)Convert.ToInt32(rdr["transfer_type_id"]);
+                            transfer.transfer_status_id = (TransferStatus)Convert.ToInt32(rdr["transfer_status_id"]);
+                            transfer.Amount = Convert.ToDecimal(rdr["amount"]);
+                            transfer.account_from = Convert.ToInt32(rdr["account_from"]);
+                            transfer.account_to = Convert.ToInt32(rdr["account_to"]);
+
+                            listTransfers.Add(transfer);
+                        }
+                    }
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return listTransfers;
+        }
         //Separate method for actual transfer record to record in Database
         public List<Transfers> ViewTransfers(int user_id)
         {
