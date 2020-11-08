@@ -43,7 +43,7 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public List<ViewTransfers> ViewTransfers(int id)
+        public List<Transfers> ViewTransfers(int id)
         {
             return transferDAO.ViewTransfers(id);
         }

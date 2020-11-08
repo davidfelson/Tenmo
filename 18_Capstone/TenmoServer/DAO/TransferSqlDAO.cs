@@ -84,10 +84,10 @@ namespace TenmoServer.DAO
         }
 
         //Separate method for actual transfer record to record in Database
-        public List<ViewTransfers> ViewTransfers(int user_id)
+        public List<Transfers> ViewTransfers(int user_id)
         {
-            List<ViewTransfers> listTransfers = new List<ViewTransfers>();
-            string sql = "select t.transfer_id, t.transfer_type_id, u.username, t.amount from users u Join accounts a ON u.user_id = a.user_id Join transfers t ON t.account_from = a.account_id where t.account_from != @user_id OR t.account_to != @user_id";
+            List<Transfers> listTransfers = new List<Transfers>();
+            string sql = "select t.transfer_id, t.transfer_type_id,t.transfer_status_id,t.amount,t.account_from,t.account_to from transfers t join accounts a on a.account_id = t.account_from join users u on u.user_id = a.user_id where t.account_to = @user_id OR t.account_from = @user_id";
 
             try
             {
@@ -104,13 +104,15 @@ namespace TenmoServer.DAO
                     {
                         while (rdr.Read())
                         {
-                            ViewTransfers viewTransfers = new ViewTransfers();
-                            viewTransfers.transfer_id = Convert.ToInt32(rdr["transfer_id"]);
-                            viewTransfers.transfer_type_id = (TransferType)Convert.ToInt32(rdr["transfer_type_id"]);
-                            viewTransfers.Username = Convert.ToString(rdr["username"]);
-                            viewTransfers.Amount = Convert.ToDecimal(rdr["amount"]);
+                            Transfers transfer = new Transfers();
+                            transfer.transfer_id = Convert.ToInt32(rdr["transfer_id"]);
+                            transfer.transfer_type_id = (TransferType)Convert.ToInt32(rdr["transfer_type_id"]);
+                            transfer.transfer_status_id = (TransferStatus)Convert.ToInt32(rdr["transfer_status_id"]);
+                            transfer.Amount = Convert.ToDecimal(rdr["amount"]);
+                            transfer.account_from = Convert.ToInt32(rdr["account_from"]);
+                            transfer.account_to = Convert.ToInt32(rdr["account_to"]);
 
-                            listTransfers.Add(viewTransfers);
+                            listTransfers.Add(transfer);
                         }
                     }
                 }

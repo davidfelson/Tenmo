@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace TenmoClient.Data
@@ -19,15 +20,19 @@ namespace TenmoClient.Data
         public int account_to { get; set; }
     }
 
-    public class ViewTransfers
+    public class VTransfers
     {
         public int transfer_id { get; set; }
 
         public FromTo transfer_type_id { get; set; }
 
-        public string Username { get; set; }
+        public TransferStatus transfer_status_id { get; set; }
 
         public decimal Amount { get; set; }
+
+        public int account_from { get; set; }
+
+        public int account_to { get; set; }
     }
 
     public enum TransferStatus : int

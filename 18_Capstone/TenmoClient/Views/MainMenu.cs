@@ -9,8 +9,9 @@ namespace TenmoClient.Views
     public class MainMenu : ConsoleMenu
     {
         private TransferService transferService = new TransferService();
+        private UserNameResponse userNameResponse = new UserNameResponse();
 
-        public MainMenu(TransferService transferService)
+        public MainMenu(TransferService transferService, UserNameResponse userNameResponse)
         { 
             AddOption("View your current balance", ViewBalance)
                 .AddOption("View your past transfers", ViewTransfers)
@@ -38,9 +39,9 @@ namespace TenmoClient.Views
         private MenuOptionResult ViewTransfers()
         {
             int userId = UserService.GetUserId();
-            foreach (ViewTransfers transfers in transferService.ViewTransfers(userId))
+            foreach (Transfers transfers in transferService.ViewTransfers(userId))
             {
-                Console.WriteLine($"{transfers.transfer_id} \t {transfers.transfer_type_id}: {transfers.Username} \t {transfers.Amount:c}");
+                Console.WriteLine(userNameResponse.UserNameResponses(userId, transfers));
             }
             Console.WriteLine("Please enter transfer ID to view details  \"Enter\". ");
             int transferIDSelection = Convert.ToInt32(Console.ReadLine());

@@ -12,7 +12,8 @@ namespace TenmoClient
         {
             TransferService transferService = new TransferService();
             AuthService authService = new AuthService();
-            new LoginRegisterMenu(authService, transferService).Show();
+            UserNameResponse userNameResponse = new UserNameResponse();
+            new LoginRegisterMenu(authService, transferService, userNameResponse).Show();
 
             Console.WriteLine("\r\nThank you for using TEnmo!!!\r\n");
         }

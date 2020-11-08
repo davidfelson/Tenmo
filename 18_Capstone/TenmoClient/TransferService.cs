@@ -70,11 +70,11 @@ namespace TenmoClient
             return true;
         }
 
-        public List<ViewTransfers> ViewTransfers(int id)
+        public List<Transfers> ViewTransfers(int id)
         {
             RestRequest request = new RestRequest($"{API_BASE_URL}transfer/{id}");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
-            IRestResponse<List<ViewTransfers>> response = client.Get<List<ViewTransfers>>(request);
+            IRestResponse<List<Transfers>> response = client.Get<List<Transfers>>(request);
 
             CheckResponse(response);
 
