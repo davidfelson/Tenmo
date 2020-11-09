@@ -54,6 +54,12 @@ namespace TenmoServer.Controllers
             return transferDAO.GetTransfer(id);
         }
 
+        [HttpGet("pending{id}")]
+        public List<Transfers> ViewPendingTransfers(int id)
+        {
+            return transferDAO.ViewPendingTransfers(id);
+        }
+
         [HttpPost("send")]
         public string SendMoney(Transfers transfers)     
         {
@@ -64,6 +70,12 @@ namespace TenmoServer.Controllers
         public string RequestMoney(Transfers transfers)
         {
             return transferServices.RequestMoney(transfers);
+        }
+
+        [HttpPut("{statusSelection}")]
+        public string ApproveRequest(int statusSelection, Transfers transfers)
+        {
+            return transferServices.ApproveRequest(statusSelection, transfers);
         }
     }
 }

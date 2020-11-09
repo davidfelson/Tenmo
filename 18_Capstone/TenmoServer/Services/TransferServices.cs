@@ -62,11 +62,11 @@ namespace TenmoServer.Services
 
             if (senderObject.Balance >= transfers.Amount && transfers.account_to != transfers.account_from)
             {
-                requesterObject.Balance += transfers.Amount;
-                senderObject.Balance -= transfers.Amount;
+                //requesterObject.Balance += transfers.Amount;
+                //senderObject.Balance -= transfers.Amount;
 
-                transferDAO.UpdateBalance(transfers.account_from, senderObject.Balance);
-                transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
+                //transferDAO.UpdateBalance(transfers.account_from, senderObject.Balance);
+                //transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
 
                 transferDAO.LogTransfers(TransferType.Request, TransferStatus.Pending, requesterObject.AccountId, senderObject.AccountId, transfers.Amount);   //Approve/reject prior to handling balance updates
 
@@ -84,9 +84,42 @@ namespace TenmoServer.Services
             {
                 return "Unsuccessful request.";
             }
+        }
+
+        public string ApproveRequest(int statusSelection, Transfers transfers)
+        {
+            Accounts senderObject = accountsDAO.GetAccountBalance(transfers.account_from);
+            Accounts requesterObject = accountsDAO.GetAccountBalance(transfers.account_to);           
+
+            if (statusSelection == 1)
+            {
+                transferDAO.UpdateStatus(transfers.transfer_id, 2);
+
+                requesterObject.Balance -= transfers.Amount;
+                senderObject.Balance += transfers.Amount;
+
+                transferDAO.UpdateBalance(transfers.account_to, senderObject.Balance);
+                transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
+
+                return "Your request has been approved.";
+            }
+            else if (statusSelection == 2)
+            {
+                transferDAO.UpdateStatus(transfers.transfer_id, 3);
+
+                return "Your request has been denied.";
+            }
+            else
+            {
+                return "The request is still pending";
+            }
             
-           
-        
+
+            
+            
+                    
+            
+
         }
     }
 }

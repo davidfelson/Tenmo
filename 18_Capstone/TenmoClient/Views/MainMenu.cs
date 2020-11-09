@@ -57,10 +57,24 @@ namespace TenmoClient.Views
 
         private MenuOptionResult ViewRequests()
         {
-            //if (transferIDSelection == 0)
-            //{
-            //    return MenuOptionResult.CloseMenuAfterSelection;
-            //}
+            int userId = UserService.GetUserId();
+            foreach(Transfers transfers in transferService.ViewPendingTransfers(userId))
+            {
+                Console.WriteLine(userNameResponse.UserNameResponses(userId, transfers));
+            }
+            
+            int pendingIDSelection = GetInteger("Please enter transfer ID to approve/reject (0 to cancel): ", null, null);
+            Transfers transferRequest = transferService.GetTransfer(pendingIDSelection);
+            
+            //Console.WriteLine("1: Approve \n2: Reject \n0: Don't approve or reject \n--------- \nPlease choose an option: ");
+            int requestIDSelection = GetInteger("1: Approve \n2: Reject \n0: Don't approve or reject \n--------- \nPlease choose an option: ", null, null);
+
+            transferService.ApproveRequest(requestIDSelection, transferRequest);
+            if (requestIDSelection == 0)        
+            {
+                return MenuOptionResult.CloseMenuAfterSelection;
+            }
+            
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

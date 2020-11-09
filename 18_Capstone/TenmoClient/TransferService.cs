@@ -79,7 +79,6 @@ namespace TenmoClient
             CheckResponse(response);
 
             return response.Data;
-
         }
 
 
@@ -94,6 +93,28 @@ namespace TenmoClient
             return response.Data;
         }
 
+        public List<Transfers> ViewPendingTransfers(int id)
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}transfer/pending{id}");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<List<Transfers>> response = client.Get<List<Transfers>>(request);
+
+            CheckResponse(response);
+
+            return response.Data;
+        }
+
+        public bool ApproveRequest(int statusSelection, Transfers transfers)
+        {
+            RestRequest request = new RestRequest(API_BASE_URL + "transfer/" + statusSelection);
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken()); 
+            request.AddJsonBody(transfers);
+            IRestResponse response = client.Put(request);
+
+            CheckResponse(response);
+
+            return true;
+        }
 
 
     }
