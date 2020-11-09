@@ -88,18 +88,18 @@ namespace TenmoServer.Services
 
         public string ApproveRequest(int statusSelection, Transfers transfers)
         {
-            Accounts senderObject = accountsDAO.GetAccountBalance(transfers.account_from);
-            Accounts requesterObject = accountsDAO.GetAccountBalance(transfers.account_to);           
+            Accounts senderObject = accountsDAO.GetAccountBalance(transfers.account_to);
+            Accounts requesterObject = accountsDAO.GetAccountBalance(transfers.account_from);           
 
             if (statusSelection == 1)
             {
                 transferDAO.UpdateStatus(transfers.transfer_id, 2);
 
-                requesterObject.Balance -= transfers.Amount;
-                senderObject.Balance += transfers.Amount;
+                requesterObject.Balance += transfers.Amount;
+                senderObject.Balance -= transfers.Amount;
 
                 transferDAO.UpdateBalance(transfers.account_to, senderObject.Balance);
-                transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
+                transferDAO.UpdateBalance(transfers.account_from, requesterObject.Balance);
 
                 return "Your request has been approved.";
             }

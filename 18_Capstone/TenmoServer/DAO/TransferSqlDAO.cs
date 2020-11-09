@@ -58,7 +58,7 @@ namespace TenmoServer.DAO
                     SqlCommand cmd = new SqlCommand(sql, conn);
 
                     cmd.Parameters.AddWithValue("@statusId", statusId);
-                    cmd.Parameters.AddWithValue("@transferId", transferId);
+                    cmd.Parameters.AddWithValue("@transfer_id", transferId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 

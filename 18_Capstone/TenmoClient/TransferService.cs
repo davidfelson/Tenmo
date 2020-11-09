@@ -2,6 +2,7 @@
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using TenmoClient.Data;
 
@@ -19,7 +20,24 @@ namespace TenmoClient
             RestRequest request = new RestRequest(API_BASE_URL + $"transfer");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             IRestResponse<List<API_User>> response = client.Get<List<API_User>>(request);
-            //add exception handling
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+
+            if (!response.IsSuccessful)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new Exception("Authorization is required for this option. Please log in.");
+                }
+                if (response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new Exception("You do not have permission to perform the requested action");
+                }
+
+                throw new Exception($"Error occurred - received non-success response: {response.StatusCode} ({(int)response.StatusCode})");
+            }
 
             return response.Data;       
         }
@@ -29,7 +47,24 @@ namespace TenmoClient
             RestRequest request = new RestRequest(API_BASE_URL + $"transfer/" + "user" + id);
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             IRestResponse<API_User> response = client.Get<API_User>(request);
-            //add exception handling
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+
+            if (!response.IsSuccessful)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new Exception("Authorization is required for this option. Please log in.");
+                }
+                if (response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    throw new Exception("You do not have permission to perform the requested action");
+                }
+
+                throw new Exception($"Error occurred - received non-success response: {response.StatusCode} ({(int)response.StatusCode})");
+            }
 
             return response.Data;
         }

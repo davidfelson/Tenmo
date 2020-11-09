@@ -2,7 +2,7 @@
 
 namespace TenmoClient
 {
-    public static class UserService                                                 //Use RestSharp
+    public static class UserService                                               
     {
         private static API_User user = new API_User();
 
@@ -27,7 +27,7 @@ namespace TenmoClient
         }
 
         public static string GetToken()
-        {                                                   //Going to use JWT authentication
+        {                                                  
             return user?.Token ?? string.Empty;
         }
     }
