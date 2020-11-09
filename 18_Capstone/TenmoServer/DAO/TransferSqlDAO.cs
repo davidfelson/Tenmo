@@ -109,7 +109,7 @@ namespace TenmoServer.DAO
         public List<Transfers> ViewPendingTransfers(int user_id)
         {
             List<Transfers> listTransfers = new List<Transfers>();
-            string sql = "select t.transfer_id, t.transfer_type_id,t.transfer_status_id,t.amount,t.account_from,t.account_to from transfers t join accounts a on a.account_id = t.account_from join users u on u.user_id = a.user_id where t.account_to = @user_id OR t.account_from = @user_id AND t.transfer_status_id = 1";
+            string sql = "select t.transfer_id, t.transfer_type_id,t.transfer_status_id,t.amount,t.account_from,t.account_to from transfers t join accounts a on a.account_id = t.account_from join users u on u.user_id = a.user_id where t.account_from = @user_id AND t.transfer_status_id = 1";
 
             try
             {

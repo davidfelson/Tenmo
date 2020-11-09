@@ -37,12 +37,10 @@ namespace TenmoServer.Services
 
                 transferDAO.LogTransfers(TransferType.Send, TransferStatus.Approved, senderObject.AccountId, receiverObject.AccountId, transfers.Amount);
 
-                //return false;
                 return "Transfer was successful";               //Make a more elegant response if time allows
             }
             else if (senderObject.Balance < transfers.Amount)
             {
-                //return false;
                 return "Your balance is insufficient to send the desired amount of money";     //CHANGE LATER IF NEEDED
             }
             else if (transfers.account_to == transfers.account_from)        //could take out
@@ -62,11 +60,6 @@ namespace TenmoServer.Services
 
             if (senderObject.Balance >= transfers.Amount && transfers.account_to != transfers.account_from)
             {
-                //requesterObject.Balance += transfers.Amount;
-                //senderObject.Balance -= transfers.Amount;
-
-                //transferDAO.UpdateBalance(transfers.account_from, senderObject.Balance);
-                //transferDAO.UpdateBalance(transfers.account_to, requesterObject.Balance);
 
                 transferDAO.LogTransfers(TransferType.Request, TransferStatus.Pending, requesterObject.AccountId, senderObject.AccountId, transfers.Amount);   //Approve/reject prior to handling balance updates
 
@@ -113,13 +106,6 @@ namespace TenmoServer.Services
             {
                 return "The request is still pending";
             }
-            
-
-            
-            
-                    
-            
-
         }
     }
 }

@@ -94,7 +94,7 @@ namespace TenmoClient.Views
             Console.WriteLine("Enter amount to transfer: ");
             decimal userAmountSelection = Convert.ToDecimal(Console.ReadLine());
 
-            transferService.SendMoney(userIDSelection, UserService.GetUserId(), userAmountSelection);
+            Console.WriteLine(transferService.SendMoney(userIDSelection, UserService.GetUserId(), userAmountSelection));
 
             return MenuOptionResult.WaitAfterMenuSelection;
 
